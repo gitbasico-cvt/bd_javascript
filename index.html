@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Fácil - Menu Principal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsivo.css">
+    
+    <!-- 1. SDK do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <h1>Estoque Fácil</h1>
+            <p>Sistema de controle de estoque</p>
+        </header>
+
+        <main>
+            <section>
+                <h2>Menu principal</h2>
+                <p>Bem-vindo ao sistema!</p>
+                <p>O que você deseja fazer hoje?</p>
+            </section>
+
+            <!-- Container usando CSS Grid -->
+            <section class="menu-grid">
+                <a href="listar.html" class="menu-opcao">
+                    <div>
+                        <strong>Listar produtos</strong>
+                        <p>Visualizar os produtos cadastrados.</p>
+                    </div>
+                    <span>&gt;</span>
+                </a>
+
+                <a href="cadastrar.html" class="menu-opcao">
+                    <div>
+                        <strong>Cadastrar produto</strong>
+                        <p>Adicionar um novo produto.</p>
+                    </div>
+                    <span>&gt;</span>
+                </a>
+
+                <a href="atualizar.html" class="menu-opcao">
+                    <div>
+                        <strong>Atualizar produto</strong>
+                        <p>Alterar informações de um produto.</p>
+                    </div>
+                    <span>&gt;</span>
+                </a>
+
+                <a href="excluir.html" class="menu-opcao">
+                    <div>
+                        <strong>Excluir produto</strong>
+                        <p>Remover um produto do sistema.</p>
+                    </div>
+                    <span>&gt;</span>
+                </a>
+            </section>
+        </main>
+
+        <footer>
+            <!-- 2. Botão de Sair atualizado para chamar a função de logout -->
+            <a href="#" id="btn-sair">← Sair do sistema</a>
+            <a href="api.html">← Testar API</a>
+        </footer>
+
+    </div>
+
+    <!-- 3. Script para verificar sessão e fazer logout -->
+    <script src="js/conectar.js"></script>
+    <script>
+        async function verificarAutenticacao() {
+            // Verifica se existe uma sessão ativa no Supabase
+            const { data: { session }, error } = await _supabase.auth.getSession();
+            
+            if (!session) {
+                // Se não estiver logado, redireciona imediatamente para a tela de login
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Executa a verificação assim que a página carrega
+        verificarAutenticacao();
+
+        // Lógica do botão de Sair
+        document.getElementById('btn-sair').addEventListener('click', async (e) => {
+            e.preventDefault();
+            await _supabase.auth.signOut(); // Encerra a sessão no Supabase
+            window.location.href = 'login.html'; // Redireciona para o login
+        });
+    </script>
+</body>
+</html>
